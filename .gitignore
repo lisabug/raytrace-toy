@@ -1,0 +1,10 @@
+# Compiled Object files
+*.lo
+*.o
+*.obj
+
+# tags
+tags
+
+# vim temp file
+*.swp
