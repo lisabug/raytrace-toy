@@ -5,7 +5,10 @@
 #include "Accel.h"
 #include "BBox.h"
 
-#define MAX_DEPTH 21
+#define MAX_DEPTH 30
+#define KT 15
+#define KI 20
+#define SAHN 10
 
 class KdNode
 {
@@ -15,8 +18,11 @@ public:
 
     void build();
     // 划分空间
-    void split(BBox & lBbox, BBox & rBbox, int axis);
+    void split(BBox & lBbox, BBox & rBbox, const int axis);
+    // split for sah
+    void split(BBox & lBbox, BBox & rBbox, const int axis, const float splitPosition);
     void allocateObjs(Objects & lObjs, Objects & rObjs, int axis);
+    void allocateObjs(Objects & lObjs, Objects & rObjs, int axis, float splitPosition);
 
     bool isLeaf();
     int getDepth();
@@ -24,6 +30,7 @@ public:
     KdNode * getLeft() {return leftChild;}
     KdNode * getRight() {return rightChild;}
     Objects & getObjs() {return objects;}
+    bool calcSAH(Objects & lObjs, Objects & rObjs, const int axis, float & splitPosition);
     bool traverse(HitInfo & minHit, const Ray& ray, float tMin, float tMax);
     void drawBBox() const;
 

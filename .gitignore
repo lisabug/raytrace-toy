@@ -8,3 +8,6 @@ tags
 
 # vim temp file
 *.swp
+
+# miro file
+miro

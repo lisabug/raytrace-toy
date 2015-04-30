@@ -143,7 +143,7 @@ BBox::intersect(const Ray & ray, float tMin, float tMax)
     if (tzmax < tmax)
         tmax = tzmax;
     //std::cout << "true" << std::endl;
-    return ((tmin < tMax) && (tmax > tMin));
+    return ((tmin < tMax) && (tmax > tMin+epsilon));
     //return true;
 
 }

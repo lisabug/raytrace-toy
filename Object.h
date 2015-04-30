@@ -16,7 +16,7 @@ public:
 	virtual void renderGL() {}
 	virtual void preCalc() {}
 
-	virtual bool intersect(HitInfo& result, const Ray& ray, float tMin = 0.0f, float tMax = MIRO_TMAX) = 0;
+	virtual bool intersect(HitInfo& result, const Ray& ray, float tMin = epsilon, float tMax = MIRO_TMAX) = 0;
     virtual Vector3 getPoint() const = 0;
     virtual std::vector<Vector3> getVertices() const = 0;
 

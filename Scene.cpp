@@ -19,9 +19,9 @@ Scene::openGL(Camera *cam)
 		m_objects[i]->renderGL();
 	}
 	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //KdNode * root = this->m_accel.getKdTree();
+    KdNode * root = this->m_accel.getKdTree();
     //root->getBBox().renderGL();
-    //root->drawBBox();
+    root->drawBBox();
 
 
 	glutSwapBuffers();

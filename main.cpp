@@ -66,8 +66,8 @@ main(int argc, char*argv[])
 {
 	// create a scene
 	// makeSpiralScene();
-    //makeTeapotScene();
-    makeBunny1Scene();
+    makeTeapotScene();
+    //makeBunny1Scene();
     //makeBunny20Scene();
     //makeSponzaScene();
 

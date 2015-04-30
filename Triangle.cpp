@@ -75,7 +75,7 @@ Triangle::intersect(HitInfo& result, const Ray& r,float tMin, float tMax)
     float gamma = delta2 / delta;
     float t = delta3 / delta;
 
-    if ((beta < 0) || (beta > 1) || (gamma < 0) || (gamma > 1) || ((1-beta-gamma) < 0) || ((1-beta-gamma) > 1) || t < tMin || t > tMax)
+    if ((beta < 0) || (beta > 1) || (gamma < 0) || (gamma > 1) || ((1-beta-gamma) < 0) || ((1-beta-gamma) > 1) || t < tMin+epsilon || t > tMax)
         return false;
 
     result.t = t;
