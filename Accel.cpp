@@ -9,12 +9,14 @@ Accel::build(Objects * objs)
 	// construct the bounding volume hierarchy
 	m_objects = objs;
 
-    //TODO: add timer
+    const clock_t begin_time = std::clock();
     BBox initBBox = BBox();
     initBBox.expandBBox(*m_objects);
     //initBBox.print();
     kdroot = new KdNode(*m_objects, initBBox, 0);
     kdroot->build();
+    float cost = float (clock() - begin_time) / CLOCKS_PER_SEC;
+    printf("%.5f s to construct Kd-Tree.\n", cost);
 }
 
 
