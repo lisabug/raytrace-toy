@@ -11,3 +11,7 @@ tags
 
 # miro file
 miro
+
+# screenshot
+*.ppm
+*.png
