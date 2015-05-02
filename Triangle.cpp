@@ -2,6 +2,7 @@
 #include "TriangleMesh.h"
 #include "Ray.h"
 
+int Triangle::intersectionNumber = 0;
 
 Triangle::Triangle(TriangleMesh * m, unsigned int i) :
 	m_mesh(m), m_index(i)
@@ -13,6 +14,23 @@ Triangle::~Triangle()
 {
 }
 
+int
+Triangle::getIntersectionNumber()
+{
+    return intersectionNumber;
+}
+
+void
+Triangle::resertIntersectionNumber()
+{
+    intersectionNumber = 0;
+}
+
+void
+Triangle::addIntersectionNumber()
+{
+    intersectionNumber++;
+}
 
 void
 Triangle::renderGL()
@@ -85,6 +103,8 @@ Triangle::intersect(HitInfo& result, const Ray& r,float tMin, float tMax)
     result.N = m_mesh->normals()[tin3.x] * (1-beta-gamma) + m_mesh->normals()[tin3.y] * beta + m_mesh->normals()[tin3.z] * gamma;
     result.N.normalize();
     result.material = this->m_material;
+
+    this->addIntersectionNumber();
 
 	return true;
 }

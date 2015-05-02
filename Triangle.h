@@ -20,8 +20,12 @@ public:
 	virtual bool intersect(HitInfo& result, const Ray& ray, float tMin = 0.0f, float tMax = MIRO_TMAX);
     virtual Vector3 getPoint() const;
     virtual std::vector<Vector3> getVertices() const;
+    static int getIntersectionNumber();
+    static void resertIntersectionNumber();
+    void addIntersectionNumber();
 
 protected:
+    static int intersectionNumber;
 	TriangleMesh* m_mesh;
 	unsigned int m_index;
 };

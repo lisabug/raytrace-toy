@@ -3,6 +3,19 @@
 
 using namespace std;
 
+int KdNode::nodeNumbers = 0;
+int KdNode::leafNumbers = 0;
+int KdNode::traverseNumbers = 0;
+
+KdNode::KdNode(const Objects & objs, const BBox & boundbox, int d)
+{
+    this->objects = objs;
+    this->depth = d;
+    this->bbox = boundbox;
+    this->leaf = false;
+    KdNode::nodeNumbers++;
+}
+
 void
 KdNode::build()
 {
@@ -20,6 +33,7 @@ KdNode::build()
         //cout << "leaf depth " << this->depth << " instance size " << this->objects.size() << endl;
         this->leftChild = NULL;
         this->rightChild = NULL;
+        this->leafNumbers++;
         return;
     }
 
@@ -312,10 +326,36 @@ KdNode::getBBox()
     return this->bbox;
 }
 
+int
+KdNode::getNodeNumbers()
+{
+    return nodeNumbers;
+}
+
+int
+KdNode::getLeafNumbers()
+{
+    return leafNumbers;
+}
+
+int
+KdNode::getTraverseNumbers()
+{
+    return traverseNumbers;
+}
+
+void
+KdNode::resetTraverseNumbers()
+{
+    traverseNumbers = 0;
+}
+
 bool
 KdNode::traverse(HitInfo &minHit, const Ray& ray, float tMin, float tMax)
 {
     bool hit = false;
+
+    traverseNumbers++;
 
     if ( this == NULL)
         return false;

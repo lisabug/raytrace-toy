@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "Image.h"
 #include "Console.h"
+#include "Triangle.h"
 
 Scene * g_scene = 0;
 
@@ -53,6 +54,7 @@ Scene::raytraceImage(Camera *cam, Image *img)
 	Ray ray;
 	HitInfo hitInfo;
 	Vector3 shadeResult;
+    int rayNumber = 0;
 
 	// loop over all pixels in the image
 	for (int j = 0; j < img->height(); ++j)
@@ -60,6 +62,7 @@ Scene::raytraceImage(Camera *cam, Image *img)
 		for (int i = 0; i < img->width(); ++i)
 		{
 			ray = cam->eyeRay(i, j, img->width(), img->height());
+            rayNumber++;
 			if (trace(hitInfo, ray))
 			{
 				shadeResult = hitInfo.material->shade(ray, hitInfo, *this);
@@ -73,6 +76,12 @@ Scene::raytraceImage(Camera *cam, Image *img)
 	}
 
 	printf("Rendering Progress: 100.000%\n");
+    //output the intersection number
+    printf("Number of rays: %d\n", rayNumber);
+    printf("Number of ray traversal: %d\n", KdNode::getTraverseNumbers());
+    printf("Number of triangle intersection: %d\n", Triangle::getIntersectionNumber());
+    KdNode::resetTraverseNumbers();
+    Triangle::resertIntersectionNumber();  // reset the intersection number for next rendering.
 	debug("done Raytracing!\n");
 }
 

@@ -17,6 +17,8 @@ Accel::build(Objects * objs)
     kdroot->build();
     float cost = float (clock() - begin_time) / CLOCKS_PER_SEC;
     printf("%.5f s to construct Kd-Tree.\n", cost);
+    printf("Number of kdnodes: %d\n", KdNode::getNodeNumbers());
+    printf("Number of leave: %d\n", KdNode::getLeafNumbers());
 }
 
 

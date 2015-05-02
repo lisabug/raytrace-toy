@@ -13,7 +13,8 @@
 class KdNode
 {
 public:
-    KdNode(const Objects & objs, const BBox & boundbox, int d): objects(objs), bbox(boundbox), depth(d), leaf(false){}
+    KdNode() {}
+    KdNode(const Objects & objs, const BBox & boundbox, int d);
     ~KdNode() {}
 
     void build();
@@ -33,6 +34,11 @@ public:
     bool calcSAH(Objects & lObjs, Objects & rObjs, const int axis, float & splitPosition);
     bool traverse(HitInfo & minHit, const Ray& ray, float tMin, float tMax);
     void drawBBox() const;
+    static int getNodeNumbers();
+    static int getLeafNumbers();
+    static int getTraverseNumbers();
+    static void resetTraverseNumbers();
+
 
 
 protected:
@@ -42,6 +48,10 @@ protected:
     KdNode* rightChild;
     int depth;
     BBox bbox;
+    //count nodes;
+    static int nodeNumbers;
+    static int leafNumbers;
+    static int traverseNumbers;
 
 };
 
