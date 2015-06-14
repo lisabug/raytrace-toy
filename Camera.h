@@ -36,16 +36,19 @@ public:
 	inline void setLookAt(const Vector3& look);
 	inline void setBGColor(float x, float y, float z);
 	inline void setBGColor(const Vector3& color);
-	inline void setFOV(float fov) 
+	inline void setFOV(float fov)
 	{ // FOV is in degree not radian
 		m_fov = fov;
 		m_distance = FILM_SIZE / (2.0 * tan(fov * HalfDegToRad));
 	}
-	inline void setDistance(float distance) 
+	inline void setDistance(float distance)
 	{ // FOV is in degree not radian
 		m_distance = distance;
 		m_fov = 2.0 * atan2(FILM_SIZE, 2.0 * distance) * RadToDeg;
 	}
+    inline void setFocalDistance(float distance)     {m_focal_distance = distance;}
+    inline void setLensSize(float size)     {m_lens_size = size;}
+    inline void setLensUse(bool use)        {m_lens = use;}
 
 	inline float fov() const                {return m_fov;}
 	inline float distance() const           {return m_distance;}
@@ -54,8 +57,12 @@ public:
 	inline const Vector3 & up() const       {return m_up;}
 	inline const Vector3 & eye() const      {return m_eye;}
 	inline const Vector3 & bgColor() const  {return m_bgColor;}
+    inline float focalDistance() const      {return m_focal_distance;}
+    inline float lensSize() const           {return m_lens_size;}
+    inline bool lens() const                {return m_lens;}
 
 	Ray eyeRay(int x, int y, int imageWidth, int imageHeight);
+    Vector3 randLensPoint();
 
 	void drawGL();
 
@@ -72,6 +79,9 @@ private:
 	Vector3 m_lookAt;
 	float m_fov;
 	float m_distance;
+    float m_focal_distance;
+    float m_lens_size;
+    bool m_lens;
 };
 
 extern Camera * g_camera;

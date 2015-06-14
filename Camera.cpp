@@ -4,12 +4,12 @@
 #include "Camera.h"
 #include "Image.h"
 #include "Scene.h"
-#include "Console.h" 
+#include "Console.h"
 #include "OpenGL.h"
 
 Camera * g_camera = 0;
 
-static bool firstRayTrace = true; 
+static bool firstRayTrace = true;
 
 
 Camera::Camera() :
@@ -20,7 +20,10 @@ Camera::Camera() :
 	m_up(0,1,0),
 	m_lookAt(FLT_MAX, FLT_MAX, FLT_MAX),
 	m_fov(45),
-	m_distance(0.038627416998)
+	m_distance(0.038627416998),
+    m_focal_distance(0.04),
+    m_lens_size(0.03),
+    m_lens(false)
 {
 	calcLookAt();
 }
@@ -96,7 +99,7 @@ Camera::drawGL()
 Ray
 Camera::eyeRay(int x, int y, int imageWidth, int imageHeight)
 {
-	// first compute the camera coordinate system 
+	// first compute the camera coordinate system
 	// ------------------------------------------
 	const Vector3 wDir = Vector3(-m_viewDir).normalize();
 	const Vector3 uDir = cross(m_up, wDir).normalize();
@@ -110,4 +113,24 @@ Camera::eyeRay(int x, int y, int imageWidth, int imageHeight)
 	const Vector3 pixelPos = m_eye + (aspectRatio * FILM_SIZE * imPlaneUPos) * uDir + (FILM_SIZE * imPlaneVPos) * vDir + m_distance * wDir;
 
 	return Ray(pixelPos, (m_eye - pixelPos).normalize());
+}
+
+Vector3
+Camera::randLensPoint()
+{
+	// first compute the camera coordinate system
+	// ------------------------------------------
+	const Vector3 wDir = Vector3(-m_viewDir).normalize();
+	const Vector3 uDir = cross(m_up, wDir).normalize();
+	const Vector3 vDir = cross(wDir, uDir);
+
+    float x = 1.0;
+    float y = 1.0;
+
+    while (x*x + y*y > 1.0)
+    {
+        x = (2.0 * drand48() - 1.0)*m_lens_size;
+        y = (2.0 * drand48() - 1.0)*m_lens_size;
+    }
+    return m_eye + x * uDir + y * vDir;
 }
