@@ -5,6 +5,7 @@
 #include "Object.h"
 #include "PointLight.h"
 #include "Accel.h"
+#include "Environment.h"
 
 class Camera;
 class Image;
@@ -18,6 +19,12 @@ public:
 	void addLight(PointLight* pObj) {m_lights.push_back(pObj);}
 	const Lights* lights() const    {return &m_lights;}
 
+    const Accel* accel() const {return &m_accel;}
+
+
+    void setEnvironment(Environment * environment) {m_environment = environment;}
+    const Environment* environment() const {return m_environment;}
+
 	void preCalc();
 	void openGL(Camera *cam);
 
@@ -28,6 +35,7 @@ protected:
 	Objects m_objects;
 	Accel m_accel;
 	Lights m_lights;
+    Environment * m_environment;
 };
 
 extern Scene * g_scene;
