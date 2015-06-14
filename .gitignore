@@ -15,3 +15,7 @@ miro
 # screenshot
 *.ppm
 *.png
+*.pfm
+
+# assignment
+assignment*
