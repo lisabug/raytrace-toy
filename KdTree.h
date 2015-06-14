@@ -5,7 +5,7 @@
 #include "Accel.h"
 #include "BBox.h"
 
-#define MAX_DEPTH 30
+#define MAX_DEPTH 21
 #define KT 15
 #define KI 20
 #define SAHN 10

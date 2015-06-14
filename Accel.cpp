@@ -29,7 +29,6 @@ Accel::intersect(HitInfo& minHit, const Ray& ray, float tMin, float tMax) const
 	// acceleration. For now we just intersect every object.
 
 	bool hit = false;
-	//HitInfo tempMinHit;
 	minHit.t = MIRO_TMAX;
 
     /*

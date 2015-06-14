@@ -55,11 +55,11 @@ Sphere::intersect(HitInfo& result, const Ray& ray, float tMin, float tMax)
 
 	// since we know that discrim >= 0, t[0] < t{1]
 	// return the t closest to us that is within range
-	if ((t[0] > tMin) && (t[0] < tMax))
+	if ((t[0] > tMin+epsilon) && (t[0] < tMax))
 	{
 		result.t = t[0];
 	}
-	else if((t[1] > tMin) && (t[1] < tMax))
+	else if((t[1] > tMin+epsilon) && (t[1] < tMax))
 	{
 		result.t = t[1];
 	}

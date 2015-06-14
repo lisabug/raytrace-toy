@@ -24,6 +24,7 @@ class BBox;
 class KdNode;
 
 class PointLight;
+class Environment;
 
 class Camera;
 class Image;

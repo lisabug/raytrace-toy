@@ -8,16 +8,24 @@ class Ray
 public:
 	Vector3 o, // Origin of ray
 	        d; // Direction of ray
+    int reflDepth; // Depth of reflection ray
 
-	Ray() : o(), d(Vector3(0.0f,0.0f,1.0f))
+	Ray() : o(), d(Vector3(0.0f,0.0f,1.0f)), reflDepth(0)
+    {
+
+		// empty
+	}
+
+	Ray(const Vector3& o, const Vector3& d) : o(o), d(d), reflDepth(0)
 	{
 		// empty
 	}
 
-	Ray(const Vector3& o, const Vector3& d) : o(o), d(d)
+	Ray(const Vector3& o, const Vector3& d, int depth) : o(o), d(d), reflDepth(depth)
 	{
 		// empty
 	}
+
 };
 
 
@@ -35,7 +43,7 @@ public:
 	const Material* material; // Material of the intersected object
 
 	// Default constructor.
-	explicit HitInfo(float t = 0.0f, const Vector3& P = Vector3(), const Vector3& N = Vector3(0.0f, 1.0f, 0.0f)) 
+	explicit HitInfo(float t = 0.0f, const Vector3& P = Vector3(), const Vector3& N = Vector3(0.0f, 1.0f, 0.0f))
 	: t(t), P(P), N(N), material (0)
 	{
 		// empty

@@ -10,8 +10,14 @@
 #include "TriangleMesh.h"
 #include "Triangle.h"
 #include "Lambert.h"
+#include "Mirror.h"
+#include "Glass.h"
+#include "Glossy.h"
 #include "MiroWindow.h"
 #include "assignment1.h"
+#include "assignment2.h"
+
+#include "PFMLoader.h"
 
 void
 makeSpiralScene()
@@ -65,11 +71,14 @@ int
 main(int argc, char*argv[])
 {
 	// create a scene
-	// makeSpiralScene();
+	//makeSpiralScene();
     makeTeapotScene();
     //makeBunny1Scene();
     //makeBunny20Scene();
     //makeSponzaScene();
+    //makeSpereScene();
+    //makeEmptyScene();
+    //makeSequenceSphere();
 
 	MiroWindow miro(&argc, argv);
 	miro.mainLoop();

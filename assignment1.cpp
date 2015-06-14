@@ -9,6 +9,9 @@
 #include "TriangleMesh.h"
 #include "Triangle.h"
 #include "Lambert.h"
+#include "Mirror.h"
+#include "Glass.h"
+#include "PFMLoader.h"
 
 // local helper function declarations
 namespace
@@ -30,29 +33,48 @@ makeTeapotScene()
 	g_image->resize(512, 512);
 
 	// set up the camera
-	g_camera->setBGColor(Vector3(0.0f, 0.0f, 0.2f));
+	g_camera->setBGColor(Vector3(1.0f, 1.0f, 1.0f));
 	g_camera->setEye(Vector3(0, 3, 6));
 	g_camera->setLookAt(Vector3(0, 0, 0));
 	g_camera->setUp(Vector3(0, 1, 0));
 	g_camera->setFOV(45);
 
+    /*
 	// create and place a point light source
 	PointLight * light = new PointLight;
-	light->setPosition(Vector3(10, 20, 10));
-	light->setColor(Vector3(1, 1, 1));
+	light->setPosition(Vector3(2, 10, 15));
+	light->setColor(Vector3(1.0f, 1.0f, 1.0f));
 	light->setWattage(4.0 * PI * 1000);
 	g_scene->addLight(light);
 
-	Material* material = new Lambert(Vector3(1.0f));
+    light = new PointLight;
+	light->setPosition(Vector3(-2, 10, -15));
+	light->setColor(Vector3(1.0f, 1.0f, 1.0f));
+	light->setWattage(4.0 * PI * 1000);
+	g_scene->addLight(light);
+    */
+
+    // add image probe light
+    int width = 1000;
+    int height = 1000;
+    Vector3 * envLights = readPFMImage("./grace_probe.pfm", &width, &height);
+    Environment * environment = new Environment(envLights, width, height);
+    g_scene->setEnvironment(environment);
+
+	Material* material = new Lambert(Vector3(1.0f, 1.0f, 1.0f));
+    Material* green = new Lambert(Vector3(0.0f, 1.0f, 0.0f));
+    Material* mirror = new Mirror();
+    Material* glass = new Glass(Vector3(1.0f, 1.0f, 1.0f), 1.55f);
+
 	TriangleMesh * teapot = new TriangleMesh;
 	teapot->load("teapot.obj");
-	addMeshTrianglesToScene(teapot, material);
+	addMeshTrianglesToScene(teapot, glass);
 
 	// create the floor triangle
 	TriangleMesh * floor = new TriangleMesh;
 	floor->createSingleTriangle();
 	floor->setV1(Vector3(-10, 0, -10));
-	floor->setV2(Vector3(  0, 0,  10));
+	floor->setV2(Vector3(-10, 0,  10));
 	floor->setV3(Vector3( 10, 0, -10));
 	floor->setN1(Vector3(0, 1, 0));
 	floor->setN2(Vector3(0, 1, 0));
@@ -61,9 +83,25 @@ makeTeapotScene()
 	Triangle* t = new Triangle;
 	t->setIndex(0);
 	t->setMesh(floor);
+	//t->setMaterial(new Lambert(Vector3(151.0/255.0, 1.0f, 1.0f)));
 	t->setMaterial(material);
 	g_scene->addObject(t);
 
+	floor = new TriangleMesh;
+	floor->createSingleTriangle();
+	floor->setV1(Vector3(10, 0, 10));
+	floor->setV2(Vector3(-10, 0,  10));
+	floor->setV3(Vector3( 10, 0, -10));
+	floor->setN1(Vector3(0, 1, 0));
+	floor->setN2(Vector3(0, 1, 0));
+	floor->setN3(Vector3(0, 1, 0));
+
+	t = new Triangle;
+	t->setIndex(0);
+	t->setMesh(floor);
+	//t->setMaterial(new Lambert(Vector3(151.0/255.0, 1.0f, 1.0f)));
+	t->setMaterial(material);
+	g_scene->addObject(t);
 	// let objects do pre-calculations if needed
 	g_scene->preCalc();
 }
